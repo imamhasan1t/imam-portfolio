@@ -1,0 +1,246 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Existing animation */
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(700%);
+  }
+}
+
+/* Existing Research page animation */
+@keyframes researchLine {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(500%);
+  }
+}
+
+
+/* =========================================
+   GUIDY STYLE PURPLE BACKGROUND
+   ========================================= */
+
+.guidy-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #050505;
+}
+
+.guidy-grid {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.guidy-column {
+  position: relative;
+  border-left: 1px solid rgba(255, 255, 255, 0.045);
+}
+
+.guidy-column:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.045);
+}
+
+/* Moving purple light */
+.guidy-column::after {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: -35%;
+  width: 2px;
+  height: 35%;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(139, 92, 246, 0.08),
+    rgba(139, 92, 246, 0.85),
+    rgba(139, 92, 246, 0.08),
+    transparent
+  );
+
+  filter: blur(1px);
+
+  box-shadow:
+    -35px 0 70px rgba(139, 92, 246, 0.18),
+    35px 0 70px rgba(139, 92, 246, 0.18);
+
+  animation: guidyLight 10s linear infinite;
+}
+
+/* Soft purple glow around the line */
+.guidy-column::before {
+  content: "";
+  position: absolute;
+  left: -100px;
+  top: -35%;
+  width: 200px;
+  height: 35%;
+
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(124, 58, 237, 0.06),
+    rgba(139, 92, 246, 0.14),
+    transparent
+  );
+
+  filter: blur(30px);
+
+  animation: guidyGlow 10s linear infinite;
+}
+
+
+/* Different timing for each column */
+
+.guidy-column:nth-child(1)::after,
+.guidy-column:nth-child(1)::before {
+  animation-delay: -7s;
+}
+
+.guidy-column:nth-child(2)::after,
+.guidy-column:nth-child(2)::before {
+  animation-delay: -2s;
+}
+
+.guidy-column:nth-child(3)::after,
+.guidy-column:nth-child(3)::before {
+  animation-delay: -9s;
+}
+
+.guidy-column:nth-child(4)::after,
+.guidy-column:nth-child(4)::before {
+  animation-delay: -4s;
+}
+
+.guidy-column:nth-child(5)::after,
+.guidy-column:nth-child(5)::before {
+  animation-delay: -6s;
+}
+
+.guidy-column:nth-child(6)::after,
+.guidy-column:nth-child(6)::before {
+  animation-delay: -1s;
+}
+
+
+/* Purple light movement */
+
+@keyframes guidyLight {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(390vh);
+    opacity: 0;
+  }
+}
+
+
+/* Purple atmospheric glow movement */
+
+@keyframes guidyGlow {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(390vh);
+    opacity: 0;
+  }
+}
+@keyframes skillLeft {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes skillRight {
+  from {
+    transform: translateX(-33.333%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-skill-left {
+  animation: skillLeft linear infinite;
+}
+
+.animate-skill-right {
+  animation: skillRight linear infinite;
+}
+
+.animate-skill-left:hover,
+.animate-skill-right:hover {
+  animation-play-state: paused;
+}
