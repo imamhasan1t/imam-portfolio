@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 
 const skills = {
@@ -28,11 +29,9 @@ const skills = {
 
   learning: [
     {
-      
-  name: "Artificial Intelligence",
-  icon: "https://cdn.simpleicons.org/tensorflow",
-},
-  
+      name: "Artificial Intelligence",
+      icon: "https://cdn.simpleicons.org/tensorflow",
+    },
     {
       name: "Robotics",
       icon: "https://cdn.simpleicons.org/robotframework",
@@ -53,7 +52,10 @@ const skills = {
       icon: "https://cdn.simpleicons.org/github",
     },
     
-    
+      {
+        name: "VS Code",
+        icon: "https://cdn.simpleicons.org/visualstudiocode",
+      },
     {
       name: "Code::Blocks",
       icon: "https://cdn.simpleicons.org/codeblocks",
@@ -62,6 +64,8 @@ const skills = {
 };
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#050505] text-white">
 
@@ -85,7 +89,7 @@ export default function Home() {
           NAVIGATION
           ===================================================== */}
 
-      <nav className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-12">
+      <nav className="relative z-20 mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 sm:py-6 lg:px-12">
 
         <a
           href="/"
@@ -126,7 +130,52 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_15px_#f97316]" />
+        {/* MOBILE MENU BUTTON */}
+        <button
+          type="button"
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+          className="flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-800 text-zinc-200 transition-colors hover:border-orange-500/50 hover:text-orange-400 md:hidden"
+        >
+          <span className="text-2xl leading-none">{menuOpen ? "×" : "☰"}</span>
+        </button>
+
+        {/* MOBILE NAVIGATION LINKS */}
+        {menuOpen && (
+          <div className="absolute left-4 right-4 top-full mt-1 flex flex-col gap-1 rounded-2xl border border-zinc-800 bg-[#090909] p-3 shadow-2xl sm:left-6 sm:right-6 md:hidden">
+            {[
+              "Home",
+              "About",
+              "Academic",
+              "Projects",
+              "Research",
+              "Achievements",
+              "Contact",
+            ].map((item) => (
+              <a
+                key={item}
+                href={
+                  item === "Projects"
+                    ? "/projects"
+                    : item === "Academic"
+                    ? "/academic"
+                    : item === "Research"
+                    ? "/research"
+                    : item === "Achievements"
+                    ? "/achievements"
+                    : `#${item.toLowerCase()}`
+                }
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-4 py-3 text-sm text-zinc-300 transition-colors hover:bg-zinc-900 hover:text-orange-400"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+        )}
+
+        <div className="hidden h-2 w-2 rounded-full bg-orange-500 shadow-[0_0_15px_#f97316] md:block" />
 
       </nav>
 
@@ -137,7 +186,7 @@ export default function Home() {
 
       <section
         id="home"
-        className="relative z-10 mx-auto grid min-h-[calc(100vh-100px)] max-w-7xl items-center gap-16 px-6 py-20 lg:grid-cols-2 lg:px-12"
+        className="relative z-10 mx-auto grid min-h-[calc(100vh-100px)] max-w-7xl grid-cols-[minmax(0,1fr)_minmax(105px,0.62fr)] items-start gap-3 px-4 py-10 sm:gap-8 sm:px-6 sm:py-16 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-12 lg:py-20"
       >
 
         {/* LEFT SIDE */}
@@ -148,7 +197,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="mb-5 text-sm uppercase tracking-[0.35em] text-orange-400"
+            className="mb-5 text-xs uppercase tracking-[0.22em] text-orange-400 sm:text-sm sm:tracking-[0.35em]"
           >
             CSE Student · Researcher · Developer
           </motion.p>
@@ -158,7 +207,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05 }}
-            className="text-5xl font-semibold leading-[1.08] tracking-tight sm:text-6xl lg:text-7xl"
+            className="text-2xl font-semibold leading-[1.08] tracking-tight min-[380px]:text-3xl sm:text-6xl lg:text-7xl"
           >
             Hi, I&apos;m
             <br />
@@ -173,7 +222,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
-            className="mt-8 max-w-xl text-lg leading-8 text-zinc-400"
+            className="mt-4 max-w-xl text-xs leading-5 text-zinc-400 min-[380px]:text-sm sm:mt-8 sm:text-lg sm:leading-8"
           >
             Exploring Artificial Intelligence, Robotics, and Software
             Development through learning, experimentation, and problem solving.
@@ -188,7 +237,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-12 space-y-2 border-t border-zinc-800/80 pt-2"
+            className="mt-8 hidden space-y-2 overflow-hidden border-t border-zinc-800/80 pt-2 sm:mt-12 lg:block"
           >
 
             <SkillMarquee
@@ -229,13 +278,17 @@ export default function Home() {
             delay: 0.15,
             ease: "easeOut",
           }}
-          className="group relative mx-auto w-full max-w-md"
+          className="group relative z-10 mx-auto block w-full min-w-0 max-w-[min(100%,420px)] lg:max-w-md"
         >
 
           <div
             className="
               relative
+              isolate
+              block
               aspect-[4/5]
+              min-h-0
+              w-full
               overflow-hidden
               rounded-3xl
               border
@@ -245,8 +298,9 @@ export default function Home() {
               shadow-purple-950/20
               transition-all
               duration-700
-              [transform:perspective(1200px)_rotateY(-8deg)_rotateX(4deg)]
-              hover:[transform:perspective(1200px)_rotateY(0deg)_rotateX(0deg)]
+              [transform:perspective(1200px)_rotateY(0deg)_rotateX(0deg)]
+              lg:[transform:perspective(1200px)_rotateY(-8deg)_rotateX(4deg)]
+              lg:hover:[transform:perspective(1200px)_rotateY(0deg)_rotateX(0deg)]
               hover:border-purple-500/40
               hover:shadow-purple-500/10
             "
@@ -255,15 +309,8 @@ export default function Home() {
             <img
               src="/profile.jpg"
               alt="Imam Hasain"
-              className="
-                h-full
-                w-full
-                object-cover
-                grayscale
-                transition-all
-                duration-500
-                group-hover:grayscale-0
-              "
+              loading="eager"
+              className="absolute inset-0 block h-full w-full object-cover object-center grayscale transition-all duration-500 group-hover:grayscale-0"
             />
 
             {/* Subtle photo highlight */}
@@ -288,6 +335,18 @@ export default function Home() {
 
         </motion.div>
 
+        {/* Mobile skills: place below the side-by-side intro and photo */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="col-span-2 mt-7 space-y-2 overflow-hidden border-t border-zinc-800/80 pt-2 lg:hidden"
+        >
+          <SkillMarquee title="Languages & Technologies" items={skills.languages} direction="left" duration={24} />
+          <SkillMarquee title="Currently Learning" items={skills.learning} direction="right" duration={27} />
+          <SkillMarquee title="Developer Tools" items={skills.tools} direction="left" duration={25} />
+        </motion.div>
+
       </section>
 
 
@@ -297,7 +356,7 @@ export default function Home() {
 
       <section
         id="about"
-        className="relative z-10 mx-auto max-w-7xl border-t border-zinc-900/80 px-6 py-28 lg:px-12"
+        className="relative z-10 mx-auto max-w-7xl border-t border-zinc-900/80 px-4 py-20 sm:px-6 sm:py-28 lg:px-12"
       >
 
         <motion.div
@@ -333,29 +392,22 @@ export default function Home() {
               </strong>
               .
             </p>
-<p>
-  I enjoy exploring{" "}
-  <strong className="font-semibold text-zinc-200">
-    intelligent and robotic systems
-  </strong>
-  , and continuously improving my technical skills through{" "}
-  <strong className="font-semibold text-zinc-200">
-    problem solving
-  </strong>
-  , experimentation, and hands-on learning.
-</p>
+
             <p>
-  You can also check out my{" "}
- <a
-  href="https://www.youtube.com/@Zozoxshinda"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="font-semibold text-zinc-200 transition-colors duration-300 hover:text-purple-400"
->
-  hobby
-</a>
-  , which is Esports, where I enjoy creating and sharing exciting highlights and memorable moments from the games I play.
-</p>
+              I enjoy{" "}
+              <strong className="font-semibold text-zinc-200">
+                building software
+              </strong>
+              , exploring{" "}
+              <strong className="font-semibold text-zinc-200">
+                intelligent and robotic systems
+              </strong>
+              , and continuously improving my technical skills through{" "}
+              <strong className="font-semibold text-zinc-200">
+                problem solving
+              </strong>
+              , experimentation, and hands-on learning.
+            </p>
 
           </div>
 
@@ -370,7 +422,7 @@ export default function Home() {
 
       <section
         id="contact"
-        className="relative z-10 mx-auto max-w-7xl overflow-hidden border-t border-zinc-900/80 px-6 py-28 lg:px-12"
+        className="relative z-10 mx-auto max-w-7xl overflow-hidden border-t border-zinc-900/80 px-4 py-20 sm:px-6 sm:py-28 lg:px-12"
       >
 
         <div className="pointer-events-none absolute -right-32 top-20 h-72 w-72 rounded-full bg-purple-500/[0.04] blur-3xl" />
@@ -389,7 +441,7 @@ export default function Home() {
           </div>
 
 
-          <h2 className="mt-6 text-5xl font-semibold tracking-tight sm:text-6xl">
+          <h2 className="mt-6 text-4xl font-semibold tracking-tight sm:text-6xl">
             Find me
             <span className="text-zinc-600">.</span>
           </h2>
@@ -555,7 +607,7 @@ export default function Home() {
           FOOTER
           ===================================================== */}
 
-      <footer className="relative z-10 border-t border-zinc-900 px-6 py-8 text-center text-sm text-zinc-600">
+      <footer className="relative z-10 border-t border-zinc-900 px-4 py-8 text-center text-xs text-zinc-600 sm:px-6 sm:text-sm">
         © 2026 Imam Hasain. Built with passion and curiosity.
       </footer>
 
